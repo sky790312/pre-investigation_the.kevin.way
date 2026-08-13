@@ -15,21 +15,21 @@ export default async function handler(req, res) {
     const { recipientEmail, userEmail, userName, reportMarkdown, formData } = req.body;
 
     const apiKey = process.env.RESEND_API_KEY;
-    const targetRecipient = recipientEmail || process.env.RECIPIENT_EMAIL || 'the.kevin.way@gmail.com';
+    const targetRecipient = recipientEmail || process.env.RECIPIENT_EMAIL || 'sky790312yks@gmail.com';
 
     // If RESEND_API_KEY is not configured yet on Vercel
     if (!apiKey) {
       console.warn('RESEND_API_KEY is missing on Vercel environment variables.');
       return res.status(200).json({
         success: true,
-        message: '【預覽模式】問卷已嘗試發送。在 Vercel 設定 RESEND_API_KEY 後即可收至真實信箱！',
+        message: '【預覽模式】問券已嘗試發送。在 Vercel 設定 RESEND_API_KEY 後即可收至真實信箱！',
         note: 'Mock response because RESEND_API_KEY is not set.',
       });
     }
 
     const resend = new Resend(apiKey);
 
-    // Format Styled HTML Email for Coach Kevin
+    // Format Styled HTML Email
     const htmlContent = `
       <!DOCTYPE html>
       <html>

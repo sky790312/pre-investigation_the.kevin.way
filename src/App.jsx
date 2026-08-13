@@ -7,30 +7,24 @@ import Step2FinancialFoundation from './components/Step2FinancialFoundation';
 import Step3InvestmentFriction from './components/Step3InvestmentFriction';
 import Step4MentalModelGoals from './components/Step4MentalModelGoals';
 import Step5ReviewSubmit from './components/Step5ReviewSubmit';
-import EmailConfigModal from './components/EmailConfigModal';
 import Footer from './components/Footer';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { initGA } from './utils/analytics';
 
 const STORAGE_KEY = 'the_kevin_way_pre_investigation_v2';
+const RECIPIENT_EMAIL = 'sky790312yks@gmail.com';
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
   const [highestCompletedStep, setHighestCompletedStep] = useState(1);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isDraftSaved, setIsDraftSaved] = useState(false);
 
-  // Production Preview Mode Switch (Default true in production, or toggled via URL ?demo=true)
-  const [isProductionView, setIsProductionView] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('demo') === 'true') return false;
+  // Initialize GA4 if Measurement ID is present
+  useEffect(() => {
+    const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-XXXXXXXXXX';
+    if (gaMeasurementId && gaMeasurementId !== 'G-XXXXXXXXXX') {
+      initGA(gaMeasurementId);
     }
-    return import.meta.env.PROD; // Automatically true on Vercel deployment
-  });
-
-  // Email Config
-  const [recipientEmail, setRecipientEmail] = useState('the.kevin.way@gmail.com');
-  const [emailEngine, setEmailEngine] = useState('resend'); // 'resend' | 'formspree' | 'mailto'
+  }, []);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -65,8 +59,6 @@ export default function App() {
       if (savedDraft) {
         const parsed = JSON.parse(savedDraft);
         if (parsed.formData) setFormData(parsed.formData);
-        if (parsed.recipientEmail) setRecipientEmail(parsed.recipientEmail);
-        if (parsed.emailEngine) setEmailEngine(parsed.emailEngine);
       }
     } catch (err) {
       console.error('Failed to load draft:', err);
@@ -76,51 +68,17 @@ export default function App() {
   // Save draft to localStorage on change
   useEffect(() => {
     try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ formData, recipientEmail, emailEngine })
-      );
-      setIsDraftSaved(true);
-      const timer = setTimeout(() => setIsDraftSaved(false), 2000);
-      return () => clearTimeout(timer);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ formData }));
     } catch (err) {
       console.error('Failed to save draft:', err);
     }
-  }, [formData, recipientEmail, emailEngine]);
+  }, [formData]);
 
   const updateFormData = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
     if (errors[key]) {
       setErrors((prev) => ({ ...prev, [key]: null }));
     }
-  };
-
-  // Populate Demo Data
-  const handleLoadDemoData = () => {
-    setFormData({
-      name: '華特 Kevin',
-      email: 'kevin.investor@example.com',
-      contactApp: 'Line ID: kevin_way_2026',
-      timezone: '台灣/香港/新加坡 (GMT+8)',
-      preferredTimeSlot: '平日晚上 (19:00 - 22:00)',
-
-      // Q1, Q2, Q3
-      expenseControl: 'exp_vague',
-      emergencyMonths: '6',
-      anxiousDebtsText: '有一筆 30 萬元的 5.8% 信貸，雖然每月正常還款，但心裡總覺得有一塊石頭壓著。房貸部分目前正常繳納中。',
-
-      // Q4, Q5, Q6
-      assetAllocationText: '台股個股 40% (電子與航運高波動股)、美股 ETF (VOO/QQQ) 30%、加密貨幣 15%、現金 15%。總可投資資產約 350 萬 TWD。',
-      leverageAndLossText: '去年曾嘗試台指期當沖與個股期貨，兩個月內大虧過 25 萬元。這次虧損讓我極度焦慮且睡眠品質變差，意識到自己不適合頻繁盯盤與高槓桿投資，非常希望轉向不盯盤的穩健系統。',
-      marketAttentionHours: 'att_frequent',
-
-      // Q7, Q8, Q9
-      rebuySoulQuestionText: '絕對不會！當初買台股個股有許多是聽信網路明牌或追高套牢的，不敢砍倉。如果明天出清重來，我會把 80% 以上直接配置在市值型 ETF 與穩健債券，不再亂碰熱門明牌股。',
-      desiredLifePaceText: '希望晚上能安心睡覺不受美股漲跌影響心情。每年能帶全家人去國外滑雪度假兩週，且過程中不需要打開任何看盤軟體看盤！',
-      absoluteOnePainPointText: '希望能幫我徹底診斷並重構現有的 350 萬資產配置，刪除高心力消耗的標的，建立一套不需要天天看盤、能自動運轉的「減法理財系統」。',
-    });
-    setErrors({});
-    setHighestCompletedStep(5);
   };
 
   // Step Validation
@@ -196,60 +154,25 @@ export default function App() {
     }
   };
 
-  const handleResetForm = () => {
-    if (window.confirm('確定要清除現有填答內容並重填嗎？')) {
-      localStorage.removeItem(STORAGE_KEY);
-      setFormData({
-        name: '',
-        email: '',
-        contactApp: '',
-        timezone: '台灣/香港/新加坡 (GMT+8)',
-        preferredTimeSlot: '',
-        expenseControl: '',
-        emergencyMonths: '',
-        anxiousDebtsText: '',
-        assetAllocationText: '',
-        leverageAndLossText: '',
-        marketAttentionHours: '',
-        rebuySoulQuestionText: '',
-        desiredLifePaceText: '',
-        absoluteOnePainPointText: '',
-      });
-      setCurrentStep(1);
-      setHighestCompletedStep(1);
-      setErrors({});
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-900">
-      {/* Navbar */}
-      <Navbar
-        onOpenSettings={() => setIsSettingsOpen(true)}
-        onResetForm={handleResetForm}
-        recipientEmail={recipientEmail}
-        isDraftSaved={isDraftSaved}
-        isProductionView={isProductionView}
-        setIsProductionView={setIsProductionView}
-      />
+      {/* Clean Production Navbar */}
+      <Navbar />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 pt-4 pb-12">
+      <main className="flex-1 max-w-3xl w-full mx-auto px-3 sm:px-6 pt-2 sm:pt-4 pb-10">
         {/* Header Hero Banner */}
-        <HeaderHero
-          onLoadDemoData={handleLoadDemoData}
-          isProductionView={isProductionView}
-        />
+        <HeaderHero />
 
-        {/* Step Progress Bar */}
+        {/* Mobile Optimized Step Progress Bar */}
         <StepProgress
           currentStep={currentStep}
           onStepClick={handleStepClick}
           highestCompletedStep={highestCompletedStep}
         />
 
-        {/* Form Container Card */}
-        <div className="glass-panel-light rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg relative border border-slate-200">
+        {/* Form Container Card - Mobile Optimized Padding */}
+        <div className="glass-panel-light rounded-2xl sm:rounded-3xl p-4 sm:p-8 md:p-10 shadow-md relative border border-slate-200">
           {currentStep === 1 && (
             <Step1Personal
               formData={formData}
@@ -285,22 +208,19 @@ export default function App() {
           {currentStep === 5 && (
             <Step5ReviewSubmit
               formData={formData}
-              recipientEmail={recipientEmail}
-              emailEngine={emailEngine}
+              recipientEmail={RECIPIENT_EMAIL}
               onEditStep={(step) => setCurrentStep(step)}
-              onResetForm={handleResetForm}
-              isProductionView={isProductionView}
             />
           )}
 
           {/* Navigation Control Buttons */}
           {currentStep < 5 && (
-            <div className="flex items-center justify-between border-t border-slate-200 pt-6 mt-8">
+            <div className="flex items-center justify-between border-t border-slate-200 pt-5 mt-6 sm:mt-8">
               <button
                 type="button"
                 onClick={handlePrevStep}
                 disabled={currentStep === 1}
-                className={`px-5 py-2.5 rounded-xl border font-semibold text-xs transition-all flex items-center gap-2 ${
+                className={`px-4 py-2.5 rounded-xl border font-semibold text-xs transition-all flex items-center gap-1.5 ${
                   currentStep === 1
                     ? 'border-slate-200 text-slate-300 cursor-not-allowed'
                     : 'border-slate-300 text-slate-700 hover:bg-slate-100 hover:text-slate-900'
@@ -313,7 +233,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all flex items-center gap-2 transform active:scale-95"
+                className="px-5 sm:px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all flex items-center gap-1.5 transform active:scale-95"
               >
                 <span>下一步 (Phase {currentStep + 1})</span>
                 <ArrowRight className="w-4 h-4" />
@@ -323,17 +243,7 @@ export default function App() {
         </div>
       </main>
 
-      {/* Email Configuration Modal */}
-      <EmailConfigModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        recipientEmail={recipientEmail}
-        setRecipientEmail={setRecipientEmail}
-        emailEngine={emailEngine}
-        setEmailEngine={setEmailEngine}
-      />
-
-      {/* Footer */}
+      {/* Clean Footer */}
       <Footer />
     </div>
   );
