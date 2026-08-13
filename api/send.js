@@ -1,33 +1,36 @@
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
 // Vercel Serverless Route for Resend Email Sending
 export default async function handler(req, res) {
   // CORS & Method Check
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(200).end()
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method Not Allowed' })
   }
 
   try {
-    const { recipientEmail, userEmail, userName, reportMarkdown, formData } = req.body;
+    const { recipientEmail, userEmail, userName, reportMarkdown, formData } =
+      req.body
 
-    const apiKey = process.env.RESEND_API_KEY;
-    const targetRecipient = recipientEmail || process.env.RECIPIENT_EMAIL || 'sky790312yks@gmail.com';
+    const apiKey = process.env.RESEND_API_KEY
+    const targetRecipient =
+      recipientEmail || process.env.RECIPIENT_EMAIL || 'sky790312yks@gmail.com'
 
     // If RESEND_API_KEY is not configured yet on Vercel
     if (!apiKey) {
-      console.warn('RESEND_API_KEY is missing on Vercel environment variables.');
+      console.warn('RESEND_API_KEY is missing on Vercel environment variables.')
       return res.status(200).json({
         success: true,
-        message: '【預覽模式】問券已嘗試發送。在 Vercel 設定 RESEND_API_KEY 後即可收至真實信箱！',
+        message:
+          '【預覽模式】問券已嘗試發送。在 Vercel 設定 RESEND_API_KEY 後即可收至真實信箱！',
         note: 'Mock response because RESEND_API_KEY is not set.',
-      });
+      })
     }
 
-    const resend = new Resend(apiKey);
+    const resend = new Resend(apiKey)
 
     // Format Styled HTML Email
     const htmlContent = `
@@ -53,7 +56,7 @@ export default async function handler(req, res) {
       <body>
         <div class="container">
           <div class="header">
-            <h1>The Kevin Way 1on1 減法理財深度事前問券</h1>
+            <h1>【The Kevin Way】建立你的專屬財務系統</h1>
             <p>填答者：${userName || '學員'} (${userEmail})</p>
           </div>
 
@@ -116,19 +119,21 @@ export default async function handler(req, res) {
         </div>
       </body>
       </html>
-    `;
+    `
 
     const data = await resend.emails.send({
       from: 'The Kevin Way Questionnaire <onboarding@resend.dev>',
       to: targetRecipient,
       replyTo: userEmail,
-      subject: `【1on1 減法理財深度問券】${userName} 的事前調查報告`,
+      subject: `【The Kevin Way】建立你的專屬財務系統 - ${userName}`,
       html: htmlContent,
-    });
+    })
 
-    return res.status(200).json({ success: true, message: '問券已成功發送！', data });
+    return res
+      .status(200)
+      .json({ success: true, message: '問券已成功發送！', data })
   } catch (error) {
-    console.error('Error in Resend API:', error);
-    return res.status(500).json({ error: '發送失敗', details: error.message });
+    console.error('Error in Resend API:', error)
+    return res.status(500).json({ error: '發送失敗', details: error.message })
   }
 }

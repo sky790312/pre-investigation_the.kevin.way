@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Shield, Clock, Flame, Zap, CheckCircle2} from 'lucide-react';
 
 export default function Navbar() {
   return (
@@ -10,7 +10,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 p-[1px] shadow-xs shrink-0">
             <div className="w-full h-full bg-white rounded-[11px] flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-emerald-600" />
+              <Flame className="w-4 h-4 text-emerald-600" />
             </div>
           </div>
           <div>
@@ -18,17 +18,14 @@ export default function Navbar() {
               <span className="font-heading font-extrabold text-base sm:text-lg tracking-tight text-slate-900">
                 The Kevin Way
               </span>
-              <span className="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-full">
-                1on1 深度問券
-              </span>
             </div>
           </div>
         </div>
 
         {/* Right Subtle Tag */}
-        <div className="text-xs text-slate-500 font-medium hidden sm:block">
+        {/* <div className="text-xs text-slate-500 font-medium hidden sm:block">
           減法理財系統事前診斷
-        </div>
+        </div> */}
       </div>
     </header>
   );
