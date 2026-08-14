@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Mail, MessageSquare, Clock, Globe2, AlertCircle } from 'lucide-react';
+import { User, Mail, MessageSquare, Clock, AlertCircle } from 'lucide-react';
 import { PREFERRED_TIME_SLOTS } from '../data/questionnaireOptions';
 
 export default function Step1Personal({ formData, updateFormData, errors }) {
@@ -12,7 +12,7 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
           <span>Phase 1: 個人基本資料與諮詢對接</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          請提供顧問能聯繫到您的真實資訊，以便寄送會前準備備忘錄與安排 1on1 會議邀請。
+          請提供能聯繫到您的真實資訊，以便寄送會前準備備忘錄與安排會議邀請。
         </p>
       </div>
 
@@ -67,10 +67,10 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
           )}
         </div>
 
-        {/* Line ID or Phone */}
-        <div className="space-y-1.5">
+        {/* Line ID (Only) */}
+        <div className="space-y-1.5 md:col-span-2">
           <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-            Line ID 或 手機號碼 (選填)
+            LINE ID (選填)
           </label>
           <div className="relative">
             <MessageSquare className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -78,33 +78,11 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
               type="text"
               value={formData.contactApp || ''}
               onChange={(e) => updateFormData('contactApp', e.target.value)}
-              placeholder="例如：Line ID: kevin_invest / 0912-345-678"
+              placeholder="例如：kevin_invest"
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none transition-all shadow-xs"
             />
           </div>
-          <p className="text-[11px] text-slate-500">僅用於會前時間調整聯繫，絕發送任何推銷簡訊</p>
-        </div>
-
-        {/* Timezone / Residence */}
-        <div className="space-y-1.5">
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-            居住地與時區
-          </label>
-          <div className="relative">
-            <Globe2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <select
-              value={formData.timezone || '台灣/香港/新加坡 (GMT+8)'}
-              onChange={(e) => updateFormData('timezone', e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 rounded-xl text-slate-900 text-sm focus:outline-none transition-all appearance-none cursor-pointer shadow-xs"
-            >
-              <option value="台灣/香港/新加坡 (GMT+8)">台灣 / 香港 / 新加坡 (GMT+8)</option>
-              <option value="日本/韓國 (GMT+9)">日本 / 韓國 (GMT+9)</option>
-              <option value="北美東岸 EST (GMT-5)">北美東岸 EST (如紐約/多倫多)</option>
-              <option value="北美西岸 PST (GMT-8)">北美西岸 PST (如舊金山/溫哥華)</option>
-              <option value="歐洲 CET/GMT">歐洲時間 (如倫敦/巴黎)</option>
-              <option value="其他區域">其他區域 (會前信件對對時間)</option>
-            </select>
-          </div>
+          <p className="text-[11px] text-slate-500">方便顧問會前與您快速確認與對接訊息</p>
         </div>
       </div>
 
@@ -112,7 +90,7 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
       <div className="space-y-3 pt-2">
         <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
           <Clock className="w-4 h-4 text-emerald-600" />
-          <span>偏好的 1on1 會議諮詢時段 <span className="text-emerald-600">*</span></span>
+          <span>偏好的諮詢時段 <span className="text-emerald-600">*</span></span>
         </label>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">

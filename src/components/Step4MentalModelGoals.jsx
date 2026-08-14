@@ -44,13 +44,13 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
       <div className="space-y-2">
         <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
           <Sun className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Q8. 你希望這套未來的「減法理財系統」，最終能幫你買回什麼樣的生活節奏？ <span className="text-emerald-600">*</span></span>
+          <span>Q8. 你希望經過這段旅程後，最終能幫你買回什麼樣的生活節奏？ <span className="text-emerald-600">*</span></span>
         </label>
         <textarea
           rows={3}
           value={formData.desiredLifePaceText || ''}
           onChange={(e) => updateFormData('desiredLifePaceText', e.target.value)}
-          placeholder="越具體越好：例如「晚上能安心睡覺不受美股漲跌焦慮」、「每年能帶家人去國外滑雪兩週且不用看盤盯盤」、「下班後能把時間完全留給陪伴孩子與個人興趣」..."
+          placeholder="越具體越好：例如「晚上能安心睡覺不受美股漲跌焦慮」、「下班後能把時間完全留給陪伴孩子與個人興趣」..."
           className={`w-full p-3.5 bg-white border ${
             errors?.desiredLifePaceText ? 'border-rose-500' : 'border-slate-300 focus:border-emerald-600'
           } rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all leading-relaxed shadow-xs`}
@@ -66,13 +66,13 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
       <div className="space-y-2">
         <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
           <Target className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Q9. 在即將到來的 1on1 諮詢中，你最希望能解決的「一個絕對痛點」是什麼？ <span className="text-emerald-600">*</span></span>
+          <span>Q9. 在接下來諮詢中，你當前最希望能解決的「一個絕對痛點」是什麼？ <span className="text-emerald-600">*</span></span>
         </label>
         <textarea
           rows={3}
           value={formData.absoluteOnePainPointText || ''}
           onChange={(e) => updateFormData('absoluteOnePainPointText', e.target.value)}
-          placeholder="請明確寫出：例如「幫我診斷現有持股並建立明確的停損機制」、「幫我打造一份不需要每天看盤的資產配置藍圖」..."
+          placeholder="請明確寫出：例如「幫我診斷現有持股」、「幫我打造一份不需要每天看盤的資產配置藍圖」..."
           className={`w-full p-3.5 bg-white border ${
             errors?.absoluteOnePainPointText ? 'border-rose-500' : 'border-slate-300 focus:border-emerald-600'
           } rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all leading-relaxed shadow-xs`}

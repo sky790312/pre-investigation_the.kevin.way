@@ -66,8 +66,7 @@ export default async function handler(req, res) {
               <div className="field-label">姓名 / 稱呼：<span className="field-value">${formData?.name || userName}</span></div>
               <div className="field-label">Email：<span className="field-value">${formData?.email || userEmail}</span></div>
               <div className="field-label">聯絡方式：<span className="field-value">${formData?.contactApp || '未提供'}</span></div>
-              <div className="field-label">居住時區：<span className="field-value">${formData?.timezone}</span></div>
-              <div className="field-label">偏好 1on1 時段：<span className="field-value" style="color: #047857; font-weight: 800;">${formData?.preferredTimeSlot}</span></div>
+              <div className="field-label">偏好諮詢時段：<span className="field-value" style="color: #047857; font-weight: 800;">${formData?.preferredTimeSlot}</span></div>
             </div>
 
             <div class="section-title">🛡️ Phase 2: 財務底層邏輯 (Financial Foundation)</div>
@@ -108,13 +107,13 @@ export default async function handler(req, res) {
               <div class="field-value">${formData?.desiredLifePaceText}</div>
             </div>
             <div class="field-box">
-              <div class="field-label">Q9. 本次 1on1 最想解決的「一個絕對痛點」：</div>
+              <div class="field-label">Q9. 本次最想解決的「一個絕對痛點」：</div>
               <div class="field-value" style="color: #047857;">${formData?.absoluteOnePainPointText}</div>
             </div>
           </div>
 
           <div class="footer">
-            1on1 減法理財事前調查系統 • 送出時間：${new Date().toLocaleString('zh-TW')}
+            【The Kevin Way】建立你的專屬財務系統 • 送出時間：${new Date().toLocaleString('zh-TW')}
           </div>
         </div>
       </body>

@@ -115,7 +115,7 @@ export default function App() {
         newErrors.desiredLifePaceText = '請具體描述您想買回的生活節奏';
       }
       if (!formData.absoluteOnePainPointText?.trim()) {
-        newErrors.absoluteOnePainPointText = '請寫出本次 1on1 最希望能解決的一個絕對痛點';
+        newErrors.absoluteOnePainPointText = '請寫出最希望能解決的一個絕對痛點';
       }
     }
 

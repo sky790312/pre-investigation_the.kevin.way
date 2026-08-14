@@ -12,7 +12,7 @@ export default function Step3InvestmentFriction({ formData, updateFormData, erro
         </div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <Compass className="w-6 h-6 text-emerald-600" />
-          <span>Phase 3: 找出投資系統裡的 Bug 與時間浪費</span>
+          <span>Phase 3: 找出投資系統裡的誤區與時間浪費</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
           設計目的：進入投資深水區，了解您的資產分佈、高風險商品歷程，以及心力與時間的消耗情況。
@@ -29,7 +29,7 @@ export default function Step3InvestmentFriction({ formData, updateFormData, erro
           rows={3}
           value={formData.assetAllocationText || ''}
           onChange={(e) => updateFormData('assetAllocationText', e.target.value)}
-          placeholder="例如：台股 ETF 30%、美股個股 30%、加密貨幣 10%、現金/外幣 30%，總投入約 200 萬 TWD..."
+          placeholder="例如：台股 ETF 30%、美股個股 30%、加密貨幣 10%、現金/外幣 30%。 或是後續再提供。"
           className={`w-full p-3.5 bg-white border ${
             errors?.assetAllocationText ? 'border-rose-500' : 'border-slate-300 focus:border-emerald-600'
           } rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all leading-relaxed shadow-xs`}

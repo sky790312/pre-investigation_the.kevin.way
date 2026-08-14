@@ -1,4 +1,4 @@
-# 📈 The Kevin Way - 1on1 投資諮詢事前調查問券網站 (Pre-Investigation)
+# 📈 【The Kevin Way】建立你的專屬財務系統 (Pre-Investigation)
 
 這是一個專為 **1on1 投資諮詢 / 會前溝通** 所設計的高質感互動式問卷網站。讓學員/客戶在諮詢前填寫他們的投資現況、資產規模、諮詢目標與卡關痛點，並可直接將整理好的報告發送至您的 Email 信箱！
 
@@ -12,7 +12,7 @@
    - 完全響應式 RWD 佈局，完美支援手機、平板與電腦
 
 2. **📊 5 步驟引導式問券 (5-Step Interactive Form)**
-   - **Step 1: 個人基本資料** (姓名、Email、Line/Telegram ID、居住時區、偏好諮詢時段)
+   - **Step 1: 個人基本資料** (姓名、Email、Line/Telegram ID、偏好諮詢時段)
    - **Step 2: 目前投資現況** (經驗年資、資產規模區間、持有的主要標的多選、月可支配投資額)
    - **Step 3: 核心目標與風險** (1on1 會議目標多選、期望年化報酬率、最大心理承受回檔 Drawdown)
    - **Step 4: 具體痛點與問題** (常見卡關痛點一鍵勾選、核心困境詳細描述、指定討論標的/持股代碼)
@@ -59,6 +59,7 @@ npm run build
 ## 🌐 建議部署平台
 
 此專案為單頁純前端靜態 React 應用，可直接免費一鍵部署至：
+
 - **Vercel**: `vercel`
 - **Netlify**: 直接連結 GitHub Repository 即可自動 CI/CD 發布
 - **GitHub Pages**: `npm run build` 後構建 `dist` 資料夾發布
