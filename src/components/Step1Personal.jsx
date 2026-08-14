@@ -9,10 +9,10 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
       <div className="border-b border-slate-200 pb-4">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <User className="w-6 h-6 text-emerald-600" />
-          <span>Phase 1: 個人基本資料與諮詢對接</span>
+          <span>Phase 1: 個人基本資料</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          請提供能聯繫到您的真實資訊，以便寄送會前準備備忘錄與安排會議邀請。
+          請提供能聯繫到您的真實資訊，以便寄送會前準備與安排會議邀請。
         </p>
       </div>
 
@@ -28,7 +28,7 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
               type="text"
               value={formData.name || ''}
               onChange={(e) => updateFormData('name', e.target.value)}
-              placeholder="例如：華特 Kevin / 華先生"
+              placeholder="例如：Kevin / 胡凱文"
               className={`w-full pl-10 pr-4 py-2.5 bg-white border ${
                 errors?.name ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-300 focus:border-emerald-600 focus:ring-emerald-500/20'
               } rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 transition-all shadow-xs`}

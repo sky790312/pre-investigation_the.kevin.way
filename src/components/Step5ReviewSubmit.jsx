@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, RefreshCw, FileText, Lock, MessageCircle, ExternalLink } from 'lucide-react';
+import { Send, CheckCircle2, RefreshCw, FileText, Lock, MessageCircle, ExternalLink, AlertTriangle, Mail } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PersonaCard from './PersonaCard';
 import { EXPENSE_CONTROL_OPTIONS, MARKET_ATTENTION_OPTIONS } from '../data/questionnaireOptions';
@@ -13,6 +13,7 @@ export default function Step5ReviewSubmit({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
   const [statusMessage, setSubmitMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const lineOfficialUrl = import.meta.env.VITE_LINE_OFFICIAL_URL || 'https://line.me';
 
@@ -73,10 +74,18 @@ export default function Step5ReviewSubmit({
     });
   };
 
+  const handleMailtoFallback = () => {
+    const reportContent = generateReportMarkdown();
+    const mailtoSubject = encodeURIComponent(`【The Kevin Way】${formData.name} 的事前調查報告`);
+    const mailtoBody = encodeURIComponent(reportContent);
+    window.location.href = `mailto:sky790312yks@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
     setSubmitMessage('');
+    setErrorMessage('');
 
     const reportContent = generateReportMarkdown();
 
@@ -102,19 +111,13 @@ export default function Step5ReviewSubmit({
         triggerConfetti();
         trackEvent('submit_questionnaire', { name: formData.name });
       } else {
-        throw new Error(resData.error || resData.details || '發送失敗');
+        throw new Error(resData.error || resData.details?.message || 'Email 發送失敗');
       }
     } catch (err) {
-      console.warn('Vercel API route submission fallback to mailto:', err);
-      // Fail-safe Mailto Fallback
-      const mailtoSubject = encodeURIComponent(`【The Kevin Way】${formData.name} 的事前調查報告`);
-      const mailtoBody = encodeURIComponent(reportContent);
-      window.location.href = `mailto:sky790312yks@gmail.com?subject=${mailtoSubject}&body=${mailtoBody}`;
-
-      setSubmitStatus('success');
-      setSubmitMessage('已為您啟動郵件備用通道，請在開啟的郵件視窗點擊「發送」即可！');
-      triggerConfetti();
-      trackEvent('submit_questionnaire_mailto', { name: formData.name });
+      console.error('Submission error:', err);
+      setSubmitStatus('error');
+      setErrorMessage(err.message || '自動發送服務暫時無法回應。');
+      trackEvent('submit_questionnaire_error', { name: formData.name, error: err.message });
     } finally {
       setIsSubmitting(false);
     }
@@ -199,6 +202,34 @@ export default function Step5ReviewSubmit({
           </div>
         </div>
       </div>
+
+      {/* Error State */}
+      {submitStatus === 'error' && (
+        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 space-y-3">
+          <div className="flex items-start gap-2.5">
+            <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-bold text-sm">自動發送失敗提示</h4>
+              <p className="text-xs text-rose-700 mt-0.5">{errorMessage}</p>
+            </div>
+          </div>
+          <div className="pt-2 border-t border-rose-200/80 flex flex-wrap gap-2">
+            <button
+              onClick={handleMailtoFallback}
+              className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-lg transition-all flex items-center gap-1.5"
+            >
+              <Mail className="w-4 h-4" />
+              <span>改用本地信箱 App 開啟並傳送</span>
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="px-4 py-2 bg-white border border-rose-300 hover:bg-rose-100 text-rose-900 font-bold text-xs rounded-lg transition-all"
+            >
+              再試一次
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Submit Action */}
       {submitStatus === 'success' ? (

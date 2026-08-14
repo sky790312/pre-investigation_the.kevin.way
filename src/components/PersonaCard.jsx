@@ -19,21 +19,21 @@ export default function PersonaCard({ formData }) {
   score = Math.min(95, Math.max(25, score));
 
   // Determine Persona Title
-  let personaTitle = '潛在減法理財升級者';
+  let personaTitle = '潛在投資理財升級者';
   let personaDesc = '具備基礎財務觀念，正尋求擺脫高摩擦盯盤、打造自動化理財系統的關鍵轉折點。';
   let badgeColor = 'from-emerald-600 to-teal-700';
 
   if (emergencyMonths < 3 || formData.expenseControl === 'exp_blind') {
     personaTitle = '急需築起防禦牆的急迫學習者';
-    personaDesc = '當前現金流與預備金水位較薄弱，1on1 諮詢首要任務是先止血、補齊防禦牆，防止投資波動干擾正常生活。';
+    personaDesc = '當前現金流與預備金水位較薄弱，首要任務是先止血、補齊防禦牆，防止投資波動干擾正常生活。';
     badgeColor = 'from-amber-600 to-rose-700';
   } else if (isHighFrictionMarket) {
     personaTitle = '高心力摩擦的重度盯盤者';
-    personaDesc = '投資佔用了過多時間與生活精力，亟需透過 1on1 進行持股減法拷問，重新買回安心睡覺的生活節奏。';
+    personaDesc = '投資佔用了過多時間與生活精力，亟需進行持股減法拷問，重新買回安心睡覺的生活節奏。';
     badgeColor = 'from-purple-600 to-blue-700';
   } else if (score >= 80) {
     personaTitle = '高防禦力的優質系統實踐者';
-    personaDesc = '已有優異的底層防禦力與低摩擦心態，1on1 能幫助您將配置調整至極致自動化與高資本效率。';
+    personaDesc = '已有優異的底層防禦力與低摩擦心態，幫助您將配置調整至極致與更高效率。';
     badgeColor = 'from-emerald-700 to-teal-800';
   }
 
