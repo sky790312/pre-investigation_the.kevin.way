@@ -1,17 +1,17 @@
 // Q1: 支出掌控度
 export const EXPENSE_CONTROL_OPTIONS = [
   {
-    id: 'exp_precise',
+    id: '記帳非常精準，能隨時調出數據。',
     label: '記帳非常精準，能隨時調出數據。',
     tag: '高防禦力',
   },
   {
-    id: 'exp_vague',
+    id: '大概知道個數字，但細節有點模糊。',
     label: '大概知道個數字，但細節有點模糊。',
     tag: '需建立習慣',
   },
   {
-    id: 'exp_blind',
+    id: '完全憑感覺，常常不知道錢花去哪了。',
     label: '完全憑感覺，常常不知道錢花去哪了。',
     tag: '漏水漏洞高',
   },
@@ -20,17 +20,17 @@ export const EXPENSE_CONTROL_OPTIONS = [
 // Q6: 每週盯盤與情緒焦慮時間耗費
 export const MARKET_ATTENTION_OPTIONS = [
   {
-    id: 'att_minimal',
+    id: '幾乎不看，系統自動運轉 (每週 < 1 小時)',
     label: '幾乎不看，系統自動運轉 (每週 < 1 小時)',
     desc: '完美心態，追求自動化配置',
   },
   {
-    id: 'att_casual',
+    id: '偶爾關心，但情緒不受影響 (每週 1-3 小時)',
     label: '偶爾關心，但情緒不受影響 (每週 1-3 小時)',
     desc: '理性看待市場波動',
   },
   {
-    id: 'att_frequent',
+    id: '花了不少時間，且常因行情影響心情 (每週 3-10 小時)',
     label: '花了不少時間，且常因行情影響心情 (每週 3-10 小時)',
     desc: '存在情緒摩擦力，影響生活品質',
   },

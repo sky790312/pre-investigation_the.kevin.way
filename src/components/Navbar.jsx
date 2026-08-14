@@ -21,11 +21,6 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-
-        {/* Right Subtle Tag */}
-        {/* <div className="text-xs text-slate-500 font-medium hidden sm:block">
-          減法理財系統事前診斷
-        </div> */}
       </div>
     </header>
   );

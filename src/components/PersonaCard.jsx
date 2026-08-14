@@ -64,7 +64,7 @@ export default function PersonaCard({ formData }) {
 
           {/* Score Badge */}
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs font-semibold">
-            <span className="text-slate-400">減法理財準備度</span>
+            <span className="text-slate-400">財務防禦力與準備度</span>
             <span className="text-emerald-400 font-extrabold text-base">{score} / 100</span>
           </div>
         </div>

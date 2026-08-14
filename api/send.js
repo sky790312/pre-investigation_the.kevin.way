@@ -1,32 +1,35 @@
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
 // Vercel Serverless Route for Resend Email Sending
 export default async function handler(req, res) {
   // CORS & Method Check
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(200).end()
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method Not Allowed' })
   }
 
   try {
-    const { recipientEmail, userEmail, userName, reportMarkdown, formData } = req.body;
+    const { recipientEmail, userEmail, userName, reportMarkdown, formData } =
+      req.body
 
-    const apiKey = process.env.RESEND_API_KEY;
-    const targetRecipient = recipientEmail || process.env.RECIPIENT_EMAIL || 'sky790312yks@gmail.com';
+    const apiKey = process.env.RESEND_API_KEY
+    const targetRecipient =
+      recipientEmail || process.env.RECIPIENT_EMAIL || 'sky790312yks@gmail.com'
 
     // If RESEND_API_KEY is not configured yet on Vercel
     if (!apiKey) {
-      console.warn('RESEND_API_KEY is missing on Vercel environment variables.');
+      console.warn('RESEND_API_KEY is missing on Vercel environment variables.')
       return res.status(400).json({
         success: false,
-        error: 'Vercel 環境變數尚未設定 RESEND_API_KEY。請至 Vercel Settings > Environment Variables 新增 RESEND_API_KEY 並重新部署 (Redeploy)。',
-      });
+        error:
+          'Vercel 環境變數尚未設定 RESEND_API_KEY。請至 Vercel Settings > Environment Variables 新增 RESEND_API_KEY 並重新部署 (Redeploy)。',
+      })
     }
 
-    const resend = new Resend(apiKey);
+    const resend = new Resend(apiKey)
 
     // Format Styled HTML Email
     const htmlContent = `
@@ -99,7 +102,7 @@ export default async function handler(req, res) {
               <div class="field-value" style="color: #78350f;">${formData?.rebuySoulQuestionText}</div>
             </div>
             <div class="field-box">
-              <div class="field-label">Q8. 減法理財想買回的生活節奏：</div>
+              <div class="field-label">Q8. 想買回的生活節奏：</div>
               <div class="field-value">${formData?.desiredLifePaceText}</div>
             </div>
             <div class="field-box">
@@ -114,7 +117,7 @@ export default async function handler(req, res) {
         </div>
       </body>
       </html>
-    `;
+    `
 
     // Resend SDK v3 returns { data, error }
     const { data, error } = await resend.emails.send({
@@ -123,27 +126,27 @@ export default async function handler(req, res) {
       replyTo: userEmail || undefined,
       subject: `【The Kevin Way】建立你的專屬財務系統 - ${userName || '新回應'}`,
       html: htmlContent,
-    });
+    })
 
     if (error) {
-      console.error('Resend API returned error:', error);
+      console.error('Resend API returned error:', error)
       return res.status(400).json({
         success: false,
         error: error.message || 'Resend Email 發送失敗',
         details: error,
-      });
+      })
     }
 
     return res.status(200).json({
       success: true,
       message: '問券已成功發送至指定信箱！',
       data,
-    });
+    })
   } catch (err) {
-    console.error('Unhandled exception in /api/send:', err);
+    console.error('Unhandled exception in /api/send:', err)
     return res.status(500).json({
       success: false,
       error: err.message || '伺服器發生未知錯誤',
-    });
+    })
   }
 }

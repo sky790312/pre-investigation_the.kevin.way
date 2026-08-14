@@ -14,7 +14,7 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
           <span>Phase 4: 把焦點從「錢」拉回「生活」的核心價值</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          設計目的：引導您深刻審視現有持股決策，並具體繪製您希望透過減法理財買回的理想生活節奏。
+          設計目的：引導您深刻審視現有持股決策，並具體繪製您希望的理想生活節奏。
         </p>
       </div>
 

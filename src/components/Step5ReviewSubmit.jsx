@@ -55,7 +55,7 @@ export default function Step5ReviewSubmit({
 ## 🧠 第三階段：心智模型與未來藍圖 (Mental Model & Goal)
 - **Q7. 【靈魂拷問】若明天出清重買，會一模一樣嗎？**：
   ${formData.rebuySoulQuestionText || '無描述'}
-- **Q8. 減法理財系統希望能幫你買回的生活節奏**：
+- **Q8. 希望能幫你買回的生活節奏**：
   ${formData.desiredLifePaceText || '無描述'}
 - **Q9. 本次諮詢最想解決的「一個絕對痛點」**：
   ${formData.absoluteOnePainPointText || '無描述'}

@@ -8,18 +8,9 @@ export default function HeaderHero() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-gradient-to-r from-emerald-100/60 via-teal-50/40 to-blue-100/40 blur-3xl pointer-events-none -z-10 rounded-full" />
 
       <div className="max-w-2xl mx-auto text-center relative z-10">
-        
-        {/* Top Highlight Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm font-bold mb-4 sm:mb-6 shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-          <span>專屬諮詢事前深度診斷</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-          <Clock className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-          <span>請至少預留 15-30 分鐘沉澱思考</span>
-        </div>
 
         {/* Clean Responsive Main Title - Single Line Guaranteed on Most Devices */}
-        <h1 className="font-extrabold tracking-tight text-slate-900 mb-3 sm:mb-4 leading-snug font-heading">
+        <h1 className="font-extrabold tracking-tight text-slate-900 mt-6 mb-3 sm:mb-4 leading-snug font-heading">
           <span className="text-slate-900 font-extrabold block text-2xl sm:text-3xl md:text-4xl mb-1.5 sm:mb-2">
             從理財到理心
           </span>
