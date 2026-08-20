@@ -19,7 +19,7 @@ export default function StepProgress({ currentStep, onStepClick, highestComplete
       <div className="block sm:hidden bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center justify-between text-xs font-bold mb-2">
           <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-            Phase {currentStep} / {STEPS.length}
+            {currentStep} / {STEPS.length}
           </span>
           <span className="text-slate-800">{currentStepData.name}</span>
         </div>

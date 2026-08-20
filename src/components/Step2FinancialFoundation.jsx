@@ -7,12 +7,9 @@ export default function Step2FinancialFoundation({ formData, updateFormData, err
     <div className="space-y-8">
       {/* Step Header */}
       <div className="border-b border-slate-200 pb-4">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold mb-2">
-          第一階段 • 財務底層邏輯 (Financial Foundation)
-        </div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <ShieldCheck className="w-6 h-6 text-emerald-600" />
-          <span>Phase 2: 盤點財務防禦力與現金流漏洞</span>
+          <span>盤點財務防禦力與現金流漏洞</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
           設計目的：確認您是否有足夠的理財「防禦力」，防止現金流失控導致投資心理崩盤。

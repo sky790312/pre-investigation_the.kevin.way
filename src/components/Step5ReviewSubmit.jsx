@@ -129,7 +129,7 @@ export default function Step5ReviewSubmit({
       <div className="border-b border-slate-200 pb-3">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <Send className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
-          <span>Phase 5: 總結與發送</span>
+          <span>總結與發送</span>
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 mt-1">
           請確認以下填答內容無誤，告訴自己你是真的想要改變！
@@ -146,7 +146,6 @@ export default function Step5ReviewSubmit({
             <FileText className="w-4 h-4 text-emerald-600" />
             <span>摘要</span>
           </span>
-          <span className="text-[11px] text-slate-500">點擊可修改特定步驟</span>
         </div>
 
         {/* Phase 1 Summary */}

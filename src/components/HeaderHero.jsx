@@ -24,22 +24,6 @@ export default function HeaderHero() {
           為了讓後面諮詢能夠發揮最大效益，請至少預留半個小時靜靜坐下來，透過這 3 個階段深入思考，盤點你的狀況與未來生活藍圖。
         </p>
 
-        {/* Feature Highlight Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold">
-          <div className="flex items-center gap-1.5 bg-white/90 shadow-xs px-3 py-1.5 rounded-xl border border-slate-200 text-slate-700">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>財務狀況分析</span>
-          </div>
-          <div className="flex items-center gap-1.5 bg-white/90 shadow-xs px-3 py-1.5 rounded-xl border border-slate-200 text-slate-700">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>合適投資節奏</span>
-          </div>
-          <div className="flex items-center gap-1.5 bg-white/90 shadow-xs px-3 py-1.5 rounded-xl border border-slate-200 text-slate-700">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>建構理想生活</span>
-          </div>
-        </div>
-
       </div>
     </div>
   );

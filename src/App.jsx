@@ -235,7 +235,7 @@ export default function App() {
                 onClick={handleNextStep}
                 className="px-5 sm:px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all flex items-center gap-1.5 transform active:scale-95"
               >
-                <span>下一步 (Phase {currentStep + 1})</span>
+                <span>下一步</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

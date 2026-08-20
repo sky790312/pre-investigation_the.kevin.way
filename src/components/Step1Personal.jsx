@@ -9,7 +9,7 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
       <div className="border-b border-slate-200 pb-4">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <User className="w-6 h-6 text-emerald-600" />
-          <span>Phase 1: 個人基本資料</span>
+          <span>個人基本資料</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
           請提供能聯繫到您的真實資訊，以便寄送會前準備與安排會議邀請。

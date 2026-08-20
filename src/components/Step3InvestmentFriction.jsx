@@ -7,12 +7,9 @@ export default function Step3InvestmentFriction({ formData, updateFormData, erro
     <div className="space-y-8">
       {/* Header */}
       <div className="border-b border-slate-200 pb-4">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold mb-2">
-          第二階段 • 投資現況與「摩擦力」盤點 (Investment & Friction)
-        </div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <Compass className="w-6 h-6 text-emerald-600" />
-          <span>Phase 3: 找出投資系統裡的誤區與時間浪費</span>
+          <span>找出投資系統裡的誤區與時間浪費</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
           設計目的：進入投資深水區，了解您的資產分佈、高風險商品歷程，以及心力與時間的消耗情況。

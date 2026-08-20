@@ -6,12 +6,9 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
     <div className="space-y-8">
       {/* Header */}
       <div className="border-b border-slate-200 pb-4">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold mb-2">
-          第三階段 • 心智模型與未來藍圖 (Mental Model & Goal)
-        </div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <HeartHandshake className="w-6 h-6 text-emerald-600" />
-          <span>Phase 4: 把焦點從「錢」拉回「生活」的核心價值</span>
+          <span>把焦點從「錢」拉回「生活」的核心價值</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
           設計目的：引導您深刻審視現有持股決策，並具體繪製您希望的理想生活節奏。
