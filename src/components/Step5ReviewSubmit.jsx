@@ -9,6 +9,7 @@ export default function Step5ReviewSubmit({
   formData,
   recipientEmail = 'sky790312yks@gmail.com',
   onEditStep,
+  onSubmitSuccess,
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
@@ -23,14 +24,6 @@ export default function Step5ReviewSubmit({
   // Format report markdown
   const generateReportMarkdown = () => {
     return `# 【The Kevin Way】建立你的專屬財務系統
-
-## 📋 基本資料 (Phase 1)
-- **姓名 / 稱呼**：${formData.name || '未填寫'}
-- **Email**：${formData.email || '未填寫'}
-- **LINE ID**：${formData.contactApp || '未提供'}
-- **偏好諮詢時段**：${formData.preferredTimeSlot || '未選擇'}
-
----
 
 ## 🛡️ 第一階段：生活與財務的底層邏輯 (Financial Foundation)
 - **Q1. 每月必要與無意識支出掌控度**：
@@ -59,6 +52,14 @@ export default function Step5ReviewSubmit({
   ${formData.desiredLifePaceText || '無描述'}
 - **Q9. 本次諮詢最想解決的「一個絕對痛點」**：
   ${formData.absoluteOnePainPointText || '無描述'}
+
+---
+
+## 📋 第四階段：諮詢預約與個人基本資料 (Contact & Schedule)
+- **姓名 / 稱呼**：${formData.name || '未填寫'}
+- **Email**：${formData.email || '未填寫'}
+- **LINE ID**：${formData.contactApp || '未提供'}
+- **偏好諮詢時段**：${formData.preferredTimeSlot || '未選擇'}
 
 ---
 *填寫時間：${new Date().toLocaleString('zh-TW')}*
@@ -110,6 +111,9 @@ export default function Step5ReviewSubmit({
         setSubmitMessage('問券已成功發送！我們會儘快審核相關內容並與您安排諮詢時間。');
         triggerConfetti();
         trackEvent('submit_questionnaire', { name: formData.name });
+        if (typeof onSubmitSuccess === 'function') {
+          onSubmitSuccess();
+        }
       } else {
         throw new Error(resData.error || resData.details?.message || 'Email 發送失敗');
       }
@@ -151,22 +155,8 @@ export default function Step5ReviewSubmit({
         {/* Phase 1 Summary */}
         <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200">
           <div className="flex items-center justify-between">
-            <h4 className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Phase 1: 個人基本資料</h4>
+            <h4 className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Phase 1: 財務底層邏輯</h4>
             <button onClick={() => onEditStep(1)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700">
-            <div><span className="text-slate-400">姓名:</span> {formData.name}</div>
-            <div><span className="text-slate-400">Email:</span> {formData.email}</div>
-            <div><span className="text-slate-400">LINE ID:</span> {formData.contactApp || '未提供'}</div>
-            <div className="sm:col-span-2"><span className="text-slate-400">偏好時段:</span> <span className="font-bold text-slate-900">{formData.preferredTimeSlot}</span></div>
-          </div>
-        </div>
-
-        {/* Phase 2 Summary */}
-        <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200">
-          <div className="flex items-center justify-between">
-            <h4 className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Phase 2: 財務底層邏輯</h4>
-            <button onClick={() => onEditStep(2)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
           </div>
           <div className="text-xs text-slate-700 space-y-1">
             <div><span className="text-slate-400">Q1. 支出掌控:</span> {expOptionLabel}</div>
@@ -175,11 +165,11 @@ export default function Step5ReviewSubmit({
           </div>
         </div>
 
-        {/* Phase 3 Summary */}
+        {/* Phase 2 Summary */}
         <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200">
           <div className="flex items-center justify-between">
-            <h4 className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Phase 3: 投資現況與摩擦力</h4>
-            <button onClick={() => onEditStep(3)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
+            <h4 className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Phase 2: 投資現況與摩擦力</h4>
+            <button onClick={() => onEditStep(2)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
           </div>
           <div className="text-xs text-slate-700 space-y-1">
             <div><span className="text-slate-400">Q4. 配置比例:</span> <p className="text-slate-800 font-medium mt-0.5 bg-slate-50 p-2 rounded">{formData.assetAllocationText}</p></div>
@@ -188,16 +178,30 @@ export default function Step5ReviewSubmit({
           </div>
         </div>
 
-        {/* Phase 4 Summary */}
+        {/* Phase 3 Summary */}
         <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200">
           <div className="flex items-center justify-between">
-            <h4 className="text-[11px] font-bold text-amber-800 uppercase tracking-wider">Phase 4: 心智模型與未來藍圖</h4>
-            <button onClick={() => onEditStep(4)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
+            <h4 className="text-[11px] font-bold text-amber-800 uppercase tracking-wider">Phase 3: 心智模型與未來藍圖</h4>
+            <button onClick={() => onEditStep(3)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
           </div>
           <div className="text-xs text-slate-700 space-y-1">
             <div><span className="text-slate-400">Q7. 出清重新買入拷問:</span> <p className="text-slate-800 font-medium mt-0.5 bg-amber-50/60 p-2 rounded text-amber-950 font-semibold">{formData.rebuySoulQuestionText}</p></div>
             <div><span className="text-slate-400">Q8. 想買回的生活節奏:</span> <p className="text-slate-800 font-medium mt-0.5 bg-slate-50 p-2 rounded">{formData.desiredLifePaceText}</p></div>
             <div><span className="text-slate-400">Q9. 諮詢最想解決的痛點:</span> <p className="text-slate-800 font-medium mt-0.5 bg-slate-50 p-2 rounded">{formData.absoluteOnePainPointText}</p></div>
+          </div>
+        </div>
+
+        {/* Phase 4 Summary */}
+        <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200">
+          <div className="flex items-center justify-between">
+            <h4 className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Phase 4: 個人基本資料與諮詢時段</h4>
+            <button onClick={() => onEditStep(4)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700">
+            <div><span className="text-slate-400">姓名:</span> {formData.name}</div>
+            <div><span className="text-slate-400">Email:</span> {formData.email}</div>
+            <div><span className="text-slate-400">LINE ID:</span> {formData.contactApp || '未提供'}</div>
+            <div className="sm:col-span-2"><span className="text-slate-400">偏好時段:</span> <span className="font-bold text-slate-900">{formData.preferredTimeSlot}</span></div>
           </div>
         </div>
       </div>

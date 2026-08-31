@@ -60,15 +60,7 @@ export default async function handler(req, res) {
           </div>
 
           <div class="content">
-            <div class="section-title">📋 Phase 1: 個人基本資料</div>
-            <div class="field-box">
-              <div class="field-label">姓名 / 稱呼：<span class="field-value">${formData?.name || userName}</span></div>
-              <div class="field-label">Email：<span class="field-value">${formData?.email || userEmail}</span></div>
-              <div class="field-label">LINE ID：<span class="field-value">${formData?.contactApp || '未提供'}</span></div>
-              <div class="field-label">偏好諮詢時段：<span class="field-value" style="color: #047857; font-weight: 800;">${formData?.preferredTimeSlot}</span></div>
-            </div>
-
-            <div class="section-title">🛡️ Phase 2: 財務底層邏輯 (Financial Foundation)</div>
+            <div class="section-title">🛡️ Phase 1: 財務底層邏輯 (Financial Foundation)</div>
             <div class="field-box">
               <div class="field-label">Q1. 支出掌控度：</div>
               <div class="field-value">${formData?.expenseControl}</div>
@@ -82,7 +74,7 @@ export default async function handler(req, res) {
               <div class="field-value">${formData?.anxiousDebtsText}</div>
             </div>
 
-            <div class="section-title">🧭 Phase 3: 投資現況與摩擦力 (Investment & Friction)</div>
+            <div class="section-title">🧭 Phase 2: 投資現況與摩擦力 (Investment & Friction)</div>
             <div class="field-box">
               <div class="field-label">Q4. 當前資產配置比例：</div>
               <div class="field-value">${formData?.assetAllocationText}</div>
@@ -96,7 +88,7 @@ export default async function handler(req, res) {
               <div class="field-value">${formData?.marketAttentionHours}</div>
             </div>
 
-            <div class="section-title">🧠 Phase 4: 心智模型與未來藍圖 (Mental Model & Goal)</div>
+            <div class="section-title">🧠 Phase 3: 心智模型與未來藍圖 (Mental Model & Goal)</div>
             <div class="soul-box">
               <div class="field-label" style="color: #b45309;">Q7. 【靈魂拷問】明天重新買入會一模一樣嗎？</div>
               <div class="field-value" style="color: #78350f;">${formData?.rebuySoulQuestionText}</div>
@@ -108,6 +100,14 @@ export default async function handler(req, res) {
             <div class="field-box">
               <div class="field-label">Q9. 本次最想解決的「一個絕對痛點」：</div>
               <div class="field-value" style="color: #047857;">${formData?.absoluteOnePainPointText}</div>
+            </div>
+
+            <div class="section-title">📋 Phase 4: 個人基本資料與偏好諮詢時段 (Contact & Schedule)</div>
+            <div class="field-box">
+              <div class="field-label">姓名 / 稱呼：<span class="field-value">${formData?.name || userName}</span></div>
+              <div class="field-label">Email：<span class="field-value">${formData?.email || userEmail}</span></div>
+              <div class="field-label">LINE ID：<span class="field-value">${formData?.contactApp || '未提供'}</span></div>
+              <div class="field-label">偏好諮詢時段：<span class="field-value" style="color: #047857; font-weight: 800;">${formData?.preferredTimeSlot}</span></div>
             </div>
           </div>
 

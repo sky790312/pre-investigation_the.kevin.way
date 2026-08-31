@@ -1,11 +1,10 @@
-import React from 'react';
-import { User, ShieldCheck, Compass, HeartHandshake, Send, Check } from 'lucide-react';
+import { ShieldCheck, Compass, HeartHandshake, UserCheck, Send, Check } from 'lucide-react';
 
 const STEPS = [
-  { id: 1, name: '基本資料', icon: User, desc: '對接聯絡方式' },
-  { id: 2, name: '財務底層', icon: ShieldCheck, desc: '防禦力與預備金' },
-  { id: 3, name: '投資摩擦', icon: Compass, desc: '配置與看盤心力' },
-  { id: 4, name: '心智藍圖', icon: HeartHandshake, desc: '持股拷問與生活' },
+  { id: 1, name: '財務底層', icon: ShieldCheck, desc: '防禦力與預備金' },
+  { id: 2, name: '投資摩擦', icon: Compass, desc: '配置與看盤心力' },
+  { id: 3, name: '心智藍圖', icon: HeartHandshake, desc: '持股拷問與生活' },
+  { id: 4, name: '諮詢預約', icon: UserCheck, desc: '對接聯絡與時段' },
   { id: 5, name: '摘要發送', icon: Send, desc: '報告剖析與發送' },
 ];
 

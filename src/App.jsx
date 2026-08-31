@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import HeaderHero from './components/HeaderHero';
 import StepProgress from './components/StepProgress';
-import Step1Personal from './components/Step1Personal';
 import Step2FinancialFoundation from './components/Step2FinancialFoundation';
 import Step3InvestmentFriction from './components/Step3InvestmentFriction';
 import Step4MentalModelGoals from './components/Step4MentalModelGoals';
+import Step4ContactSchedule from './components/Step4ContactSchedule';
 import Step5ReviewSubmit from './components/Step5ReviewSubmit';
 import Footer from './components/Footer';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -13,6 +13,29 @@ import { initGA } from './utils/analytics';
 
 const STORAGE_KEY = 'the_kevin_way_pre_investigation_v2';
 const RECIPIENT_EMAIL = 'sky790312yks@gmail.com';
+
+const INITIAL_FORM_DATA = {
+  name: '',
+  email: '',
+  contactApp: '',
+  timezone: '台灣/香港/新加坡 (GMT+8)',
+  preferredTimeSlot: '',
+
+  // Phase 1 (Financial Foundation)
+  expenseControl: '', // Q1
+  emergencyMonths: '', // Q2
+  anxiousDebtsText: '', // Q3
+
+  // Phase 2 (Investment & Friction)
+  assetAllocationText: '', // Q4
+  leverageAndLossText: '', // Q5
+  marketAttentionHours: '', // Q6
+
+  // Phase 3 (Mental Model & Goal)
+  rebuySoulQuestionText: '', // Q7
+  desiredLifePaceText: '', // Q8
+  absoluteOnePainPointText: '', // Q9
+};
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -27,29 +50,7 @@ export default function App() {
   }, []);
 
   // Form State
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    contactApp: '',
-    timezone: '台灣/香港/新加坡 (GMT+8)',
-    preferredTimeSlot: '',
-
-    // Phase 1 (Financial Foundation)
-    expenseControl: '', // Q1
-    emergencyMonths: '', // Q2
-    anxiousDebtsText: '', // Q3
-
-    // Phase 2 (Investment & Friction)
-    assetAllocationText: '', // Q4
-    leverageAndLossText: '', // Q5
-    marketAttentionHours: '', // Q6
-
-    // Phase 3 (Mental Model & Goal)
-    rebuySoulQuestionText: '', // Q7
-    desiredLifePaceText: '', // Q8
-    absoluteOnePainPointText: '', // Q9
-  });
-
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
 
   // Load draft from localStorage on mount
@@ -58,7 +59,9 @@ export default function App() {
       const savedDraft = localStorage.getItem(STORAGE_KEY);
       if (savedDraft) {
         const parsed = JSON.parse(savedDraft);
-        if (parsed.formData) setFormData(parsed.formData);
+        if (parsed.formData) {
+          setFormData(parsed.formData);
+        }
       }
     } catch (err) {
       console.error('Failed to load draft:', err);
@@ -81,15 +84,38 @@ export default function App() {
     }
   };
 
-  // Step Validation
+  // Clear device storage & reset form
+  const handleResetForm = () => {
+    const confirmed = window.confirm('確定要清空目前填寫的所有內容並重填嗎？這將會清除此裝置上的草稿紀錄。');
+    if (confirmed) {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (err) {
+        console.error('Failed to clear storage:', err);
+      }
+      setFormData(INITIAL_FORM_DATA);
+      setErrors({});
+      setCurrentStep(1);
+      setHighestCompletedStep(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Clear storage upon successful submission
+  const handleSubmitSuccess = () => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (err) {
+      console.error('Failed to clear storage after submission:', err);
+    }
+  };
+
+  // Step Validation (Step 1~3: Self-assessment, Step 4: Contact & Schedule)
   const validateStep = (step) => {
     const newErrors = {};
 
     if (step === 1) {
-      if (!formData.name?.trim()) newErrors.name = '請填寫您的姓名或稱呼';
-      if (!formData.email?.trim() || !formData.email.includes('@')) newErrors.email = '請填寫有效的 Email';
-      if (!formData.preferredTimeSlot) newErrors.preferredTimeSlot = '請選擇偏好的諮詢時段';
-    } else if (step === 2) {
+      // Phase 1: 財務底層邏輯
       if (!formData.expenseControl) newErrors.expenseControl = '請選擇支出掌控狀況';
       if (!formData.emergencyMonths || parseFloat(formData.emergencyMonths) < 0) {
         newErrors.emergencyMonths = '請填寫緊急預備金維持月數';
@@ -97,7 +123,8 @@ export default function App() {
       if (!formData.anxiousDebtsText?.trim()) {
         newErrors.anxiousDebtsText = '請誠實描述您目前焦慮的債務狀況 (若無請填無)';
       }
-    } else if (step === 3) {
+    } else if (step === 2) {
+      // Phase 2: 投資摩擦力
       if (!formData.assetAllocationText?.trim()) {
         newErrors.assetAllocationText = '請大致寫下目前的資產配置比例';
       }
@@ -107,7 +134,8 @@ export default function App() {
       if (!formData.marketAttentionHours) {
         newErrors.marketAttentionHours = '請選擇平均每週關注市場的時間';
       }
-    } else if (step === 4) {
+    } else if (step === 3) {
+      // Phase 3: 心智模型與目標
       if (!formData.rebuySoulQuestionText?.trim()) {
         newErrors.rebuySoulQuestionText = '請誠實回答靈魂拷問：明天重新買入會一模一樣嗎？';
       }
@@ -117,6 +145,11 @@ export default function App() {
       if (!formData.absoluteOnePainPointText?.trim()) {
         newErrors.absoluteOnePainPointText = '請寫出最希望能解決的一個絕對痛點';
       }
+    } else if (step === 4) {
+      // Phase 4: 聯絡資訊與預約時段
+      if (!formData.name?.trim()) newErrors.name = '請填寫您的姓名或稱呼';
+      if (!formData.email?.trim() || !formData.email.includes('@')) newErrors.email = '請填寫有效的 Email';
+      if (!formData.preferredTimeSlot) newErrors.preferredTimeSlot = '請選擇偏好的諮詢時段';
     }
 
     setErrors(newErrors);
@@ -156,8 +189,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-emerald-500/20 selection:text-emerald-900">
-      {/* Clean Production Navbar */}
-      <Navbar />
+      {/* Clean Production Navbar with Clear Storage option */}
+      <Navbar onResetForm={handleResetForm} />
 
       {/* Main Container */}
       <main className="flex-1 max-w-3xl w-full mx-auto px-3 sm:px-6 pt-2 sm:pt-4 pb-10">
@@ -171,17 +204,9 @@ export default function App() {
           highestCompletedStep={highestCompletedStep}
         />
 
-        {/* Form Container Card - Mobile Optimized Padding */}
+        {/* Form Container Card */}
         <div className="glass-panel-light rounded-2xl sm:rounded-3xl p-4 sm:p-8 md:p-10 shadow-md relative border border-slate-200">
           {currentStep === 1 && (
-            <Step1Personal
-              formData={formData}
-              updateFormData={updateFormData}
-              errors={errors}
-            />
-          )}
-
-          {currentStep === 2 && (
             <Step2FinancialFoundation
               formData={formData}
               updateFormData={updateFormData}
@@ -189,7 +214,7 @@ export default function App() {
             />
           )}
 
-          {currentStep === 3 && (
+          {currentStep === 2 && (
             <Step3InvestmentFriction
               formData={formData}
               updateFormData={updateFormData}
@@ -197,8 +222,16 @@ export default function App() {
             />
           )}
 
-          {currentStep === 4 && (
+          {currentStep === 3 && (
             <Step4MentalModelGoals
+              formData={formData}
+              updateFormData={updateFormData}
+              errors={errors}
+            />
+          )}
+
+          {currentStep === 4 && (
+            <Step4ContactSchedule
               formData={formData}
               updateFormData={updateFormData}
               errors={errors}
@@ -210,6 +243,7 @@ export default function App() {
               formData={formData}
               recipientEmail={RECIPIENT_EMAIL}
               onEditStep={(step) => setCurrentStep(step)}
+              onSubmitSuccess={handleSubmitSuccess}
             />
           )}
 
