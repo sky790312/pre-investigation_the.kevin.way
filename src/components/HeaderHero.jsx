@@ -22,8 +22,6 @@ export default function HeaderHero() {
         {/* Subtitle with Comfortable Line Spacing */}
         <p className="text-slate-600 text-xs sm:text-base leading-relaxed max-w-xl mx-auto font-medium mb-6">
           花一杯咖啡的時間，為自己做一次全方位的財務與心智盲點體檢！
-          <br />
-          前 3 階段完成自我診斷盤點，最後引導預約專屬 1on1 深度諮詢。
         </p>
 
       </div>
