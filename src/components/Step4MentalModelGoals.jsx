@@ -8,30 +8,30 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
       <div className="border-b border-slate-200 pb-4">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <HeartHandshake className="w-6 h-6 text-emerald-600" />
-          <span>把焦點從「錢」拉回「生活」的核心價值</span>
+          <span>讓投資回到你想過的生活</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          設計目的：引導您深刻審視現有持股決策，並具體繪製您希望的理想生活節奏。
+          想想你現在的選擇，以及最想改善的一件事。不確定的地方也可以直接寫下來。
         </p>
       </div>
 
       {/* Q7: Soul Question - Rebuy Everything tomorrow? */}
       <div className="space-y-2 p-5 rounded-2xl bg-amber-50/60 border border-amber-200/80 shadow-xs">
-        <label className="block text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-2">
+        <label className="block text-sm font-bold text-amber-900 uppercase tracking-wider flex items-center gap-2">
           <Flame className="w-4 h-4 text-amber-600 shrink-0" />
-          <span>Q7. 【靈魂拷問】如果你現在要把所有的投資資產全部賣掉，明天重新買入，你會跟今天買的一模一樣嗎？如果不會，為什麼？ <span className="text-rose-600">*</span></span>
+          <span>Q7. 假設今天重新開始投資，你會選擇同樣的配置嗎？為什麼？（只是思考練習，不需要實際買賣） <span className="text-rose-600">*</span></span>
         </label>
         <textarea
           rows={3}
           value={formData.rebuySoulQuestionText || ''}
           onChange={(e) => updateFormData('rebuySoulQuestionText', e.target.value)}
-          placeholder="請誠實思考：例如「絕對不會，當初買了某些炒作個股現在套牢不敢賣，重新來過我會全換成市值型 ETF」..."
+          placeholder="例如：「大致相同，因為符合我的目標」、「不確定，有些持股已忘記當初買入的原因」。尚未投資也可以直接填寫。"
           className={`w-full p-3.5 bg-white border ${
             errors?.rebuySoulQuestionText ? 'border-rose-500' : 'border-amber-300 focus:border-amber-600'
           } rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all leading-relaxed shadow-xs`}
         />
         {errors?.rebuySoulQuestionText && (
-          <p className="text-xs text-rose-600 font-medium flex items-center gap-1 mt-1">
+          <p className="text-sm text-rose-600 font-medium flex items-center gap-1 mt-1">
             <AlertCircle className="w-3.5 h-3.5" /> {errors.rebuySoulQuestionText}
           </p>
         )}
@@ -39,9 +39,9 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
 
       {/* Q8: Desired Life Pace */}
       <div className="space-y-2">
-        <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+        <label className="block text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
           <Sun className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Q8. 你希望經過這段旅程後，最終能幫你買回什麼樣的生活節奏？ <span className="text-emerald-600">*</span></span>
+          <span>Q8. 你希望投資能配合什麼樣的生活節奏？ <span className="text-emerald-600">*</span></span>
         </label>
         <textarea
           rows={3}
@@ -53,7 +53,7 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
           } rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all leading-relaxed shadow-xs`}
         />
         {errors?.desiredLifePaceText && (
-          <p className="text-xs text-rose-600 font-medium flex items-center gap-1 mt-1">
+          <p className="text-sm text-rose-600 font-medium flex items-center gap-1 mt-1">
             <AlertCircle className="w-3.5 h-3.5" /> {errors.desiredLifePaceText}
           </p>
         )}
@@ -61,21 +61,21 @@ export default function Step4MentalModelGoals({ formData, updateFormData, errors
 
       {/* Q9: One Absolute Pain Point */}
       <div className="space-y-2">
-        <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+        <label className="block text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
           <Target className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Q9. 在接下來諮詢中，你當前最希望能解決的「一個絕對痛點」是什麼？ <span className="text-emerald-600">*</span></span>
+          <span>Q9. 目前關於投資與生活，你最想釐清的一個問題是什麼？ <span className="text-emerald-600">*</span></span>
         </label>
         <textarea
           rows={3}
           value={formData.absoluteOnePainPointText || ''}
           onChange={(e) => updateFormData('absoluteOnePainPointText', e.target.value)}
-          placeholder="請明確寫出：例如「幫我診斷現有持股」、「幫我打造一份不需要每天看盤的資產配置藍圖」..."
+          placeholder="例如：「如何減少反覆查看行情？」、「我不確定現有配置與生活目標是否一致」。"
           className={`w-full p-3.5 bg-white border ${
             errors?.absoluteOnePainPointText ? 'border-rose-500' : 'border-slate-300 focus:border-emerald-600'
           } rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all leading-relaxed shadow-xs`}
         />
         {errors?.absoluteOnePainPointText && (
-          <p className="text-xs text-rose-600 font-medium flex items-center gap-1 mt-1">
+          <p className="text-sm text-rose-600 font-medium flex items-center gap-1 mt-1">
             <AlertCircle className="w-3.5 h-3.5" /> {errors.absoluteOnePainPointText}
           </p>
         )}

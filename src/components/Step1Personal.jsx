@@ -62,7 +62,7 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
               <AlertCircle className="w-3.5 h-3.5" /> {errors.email}
             </p>
           ) : (
-            <p className="text-[11px] text-slate-500">此問券報告與會前行事曆邀請將寄至此信箱</p>
+            <p className="text-[11px] text-slate-500">此問卷報告與會前行事曆邀請將寄至此信箱</p>
           )}
         </div>
 
@@ -81,7 +81,7 @@ export default function Step1Personal({ formData, updateFormData, errors }) {
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none transition-all shadow-xs"
             />
           </div>
-          <p className="text-[11px] text-slate-500">方便顧問會前與您快速確認與對接訊息</p>
+          <p className="text-[11px] text-slate-500">選填；可用於後續確認需求與時間。</p>
         </div>
       </div>
     </div>

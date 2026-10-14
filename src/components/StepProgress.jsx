@@ -1,14 +1,19 @@
 import { ShieldCheck, Compass, HeartHandshake, UserCheck, Send, Check } from 'lucide-react';
 
 const STEPS = [
-  { id: 1, name: '財務底層', icon: ShieldCheck, desc: '防禦力與預備金' },
-  { id: 2, name: '投資摩擦', icon: Compass, desc: '配置與看盤心力' },
-  { id: 3, name: '心智藍圖', icon: HeartHandshake, desc: '持股拷問與生活' },
-  { id: 4, name: '諮詢預約', icon: UserCheck, desc: '對接聯絡與時段' },
-  { id: 5, name: '摘要發送', icon: Send, desc: '報告剖析與發送' },
+  { id: 1, name: '財務準備', icon: ShieldCheck, desc: '支出與現金緩衝' },
+  { id: 2, name: '投資習慣', icon: Compass, desc: '配置與注意力' },
+  { id: 3, name: '生活目標', icon: HeartHandshake, desc: '你在意的改變' },
+  { id: 4, name: '檢測結果', icon: UserCheck, desc: '觀察與小行動' },
 ];
 
 export default function StepProgress({ currentStep, onStepClick, highestCompletedStep }) {
+  if (currentStep > 4) return (
+    <div className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">
+      <p className="font-bold">檢測已完成 · 自選諮詢申請 {currentStep - 4} / 2</p>
+      <button type="button" onClick={() => onStepClick(4)} className="mt-2 underline">返回檢測結果</button>
+    </div>
+  );
   const currentStepData = STEPS.find((s) => s.id === currentStep) || STEPS[0];
   const progressPercent = Math.min(100, Math.max(0, ((currentStep - 1) / (STEPS.length - 1)) * 100));
 
@@ -41,12 +46,12 @@ export default function StepProgress({ currentStep, onStepClick, highestComplete
         </div>
 
         {/* Step Circles */}
-        <div className="grid grid-cols-5 gap-1 text-center">
+        <div className="grid grid-cols-4 gap-1 text-center">
           {STEPS.map((step) => {
             const Icon = step.icon;
             const isActive = currentStep === step.id;
             const isCompleted = step.id < currentStep || highestCompletedStep >= step.id;
-            const isClickable = step.id <= highestCompletedStep + 1 || step.id <= currentStep;
+            const isClickable = step.id < currentStep;
 
             return (
               <button

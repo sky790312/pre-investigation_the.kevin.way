@@ -139,7 +139,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: '問券已成功發送至指定信箱！',
+      message: '問卷已成功發送至指定信箱！',
       data,
     })
   } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, RefreshCw, FileText, Lock, MessageCircle, ExternalLink, AlertTriangle, Mail } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import PersonaCard from './PersonaCard';
+
 import { EXPENSE_CONTROL_OPTIONS, MARKET_ATTENTION_OPTIONS } from '../data/questionnaireOptions';
 import { trackEvent } from '../utils/analytics';
 
@@ -108,9 +108,9 @@ export default function Step5ReviewSubmit({
 
       if (response.ok && resData.success) {
         setSubmitStatus('success');
-        setSubmitMessage('問券已成功發送！我們會儘快審核相關內容並與您安排諮詢時間。');
+        setSubmitMessage('已收到你的諮詢申請。Kevin 會再聯繫你確認需求與時間；目前尚未成立預約。');
         triggerConfetti();
-        trackEvent('submit_questionnaire', { name: formData.name });
+        trackEvent('submit_questionnaire', {});
         if (typeof onSubmitSuccess === 'function') {
           onSubmitSuccess();
         }
@@ -121,7 +121,7 @@ export default function Step5ReviewSubmit({
       console.error('Submission error:', err);
       setSubmitStatus('error');
       setErrorMessage(err.message || '自動發送服務暫時無法回應。');
-      trackEvent('submit_questionnaire_error', { name: formData.name, error: err.message });
+      trackEvent('submit_questionnaire_error', { error_type: 'submission_failed' });
     } finally {
       setIsSubmitting(false);
     }
@@ -133,15 +133,13 @@ export default function Step5ReviewSubmit({
       <div className="border-b border-slate-200 pb-3">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <Send className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
-          <span>總結與發送</span>
+          <span>確認並送出諮詢申請</span>
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 mt-1">
-          請確認以下填答內容無誤，告訴自己你是真的想要改變！
+          請確認回答與聯絡方式。只有按下送出後，這些內容才會寄給 Kevin，供後續聯繫與討論使用。
         </p>
       </div>
 
-      {/* Dynamic Persona Card */}
-      <PersonaCard formData={formData} />
 
       {/* Structured Review List */}
       <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-6 space-y-4">
@@ -185,7 +183,7 @@ export default function Step5ReviewSubmit({
             <button onClick={() => onEditStep(3)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
           </div>
           <div className="text-xs text-slate-700 space-y-1">
-            <div><span className="text-slate-400">Q7. 出清重新買入拷問:</span> <p className="text-slate-800 font-medium mt-0.5 bg-amber-50/60 p-2 rounded text-amber-950 font-semibold">{formData.rebuySoulQuestionText}</p></div>
+            <div><span className="text-slate-400">Q7. 重新選擇配置:</span> <p className="text-slate-800 font-medium mt-0.5 bg-amber-50/60 p-2 rounded text-amber-950 font-semibold">{formData.rebuySoulQuestionText}</p></div>
             <div><span className="text-slate-400">Q8. 想買回的生活節奏:</span> <p className="text-slate-800 font-medium mt-0.5 bg-slate-50 p-2 rounded">{formData.desiredLifePaceText}</p></div>
             <div><span className="text-slate-400">Q9. 諮詢最想解決的痛點:</span> <p className="text-slate-800 font-medium mt-0.5 bg-slate-50 p-2 rounded">{formData.absoluteOnePainPointText}</p></div>
           </div>
@@ -195,7 +193,7 @@ export default function Step5ReviewSubmit({
         <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200">
           <div className="flex items-center justify-between">
             <h4 className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">Phase 4: 個人基本資料與諮詢時段</h4>
-            <button onClick={() => onEditStep(4)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
+            <button onClick={() => onEditStep(5)} className="text-xs text-emerald-700 hover:underline font-semibold">修改</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-slate-700">
             <div><span className="text-slate-400">姓名:</span> {formData.name}</div>
@@ -241,7 +239,7 @@ export default function Step5ReviewSubmit({
             <CheckCircle2 className="w-7 h-7" />
           </div>
           <div>
-            <h3 className="text-xl font-bold text-emerald-950 font-heading">感謝您的認真填寫！報告已成功提交</h3>
+            <h3 className="text-xl font-bold text-emerald-950 font-heading">諮詢申請已送出</h3>
             <p className="text-xs sm:text-sm text-emerald-800 mt-1">{statusMessage}</p>
           </div>
 
@@ -249,10 +247,10 @@ export default function Step5ReviewSubmit({
           <div className="bg-white p-5 rounded-2xl border border-emerald-200 text-left space-y-3 shadow-xs">
             <div className="flex items-center gap-2 text-emerald-900 font-bold text-sm">
               <MessageCircle className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>【下一步】加 LINE 官方帳號，確認諮詢對接</span>
+              <span>想用 LINE 聯絡？可選擇加入官方帳號</span>
             </div>
             <p className="text-xs text-slate-600 leading-relaxed">
-              為了確保能第一時間為您安排 1on1 諮詢時間並傳送會前準備資料，請點擊下方按鈕加入我們的 LINE 官方帳號，並發送您的名字即可對接！
+              你的申請已送出，不需重複填寫。如果偏好 LINE 聯絡，可以加入官方帳號並告知稱呼，方便核對申請。
             </p>
             <a
               href={lineOfficialUrl}
@@ -261,7 +259,7 @@ export default function Step5ReviewSubmit({
               className="w-full py-3 px-4 bg-[#00B900] hover:bg-[#009900] text-white font-extrabold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 transform active:scale-[0.99]"
             >
               <MessageCircle className="w-5 h-5 fill-current" />
-              <span>點此加入 LINE 官方帳號對接諮詢</span>
+              <span>加入 LINE 官方帳號</span>
               <ExternalLink className="w-4 h-4" />
             </a>
           </div>
@@ -276,19 +274,19 @@ export default function Step5ReviewSubmit({
             {isSubmitting ? (
               <>
                 <RefreshCw className="w-5 h-5 animate-spin" />
-                <span>傳送問券中...</span>
+                <span>正在送出申請...</span>
               </>
             ) : (
               <>
                 <Send className="w-5 h-5" />
-                <span>已送出</span>
+                <span>送出諮詢申請</span>
               </>
             )}
           </button>
 
           <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500">
             <Lock className="w-3.5 h-3.5 text-emerald-600" />
-            <span>個人資料僅用於會前對接，絕對隱私保密</span>
+            <span>送出後，填答與聯絡資料將透過寄信服務傳送給 Kevin。</span>
           </div>
         </div>
       )}

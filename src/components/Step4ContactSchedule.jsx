@@ -7,23 +7,23 @@ export default function Step4ContactSchedule({ formData, updateFormData, errors 
     <div className="space-y-6">
       {/* Title */}
       <div className="border-b border-slate-200 pb-4">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-xs font-bold mb-2 border border-emerald-200">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-sm font-bold mb-2 border border-emerald-200">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>恭喜完成前三階段自測</span>
+          <span>檢測已完成 · 以下為自選諮詢申請</span>
         </div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 font-heading">
           <UserCheck className="w-6 h-6 text-emerald-600" />
-          <span>第四階段：預約 1on1 諮詢對接</span>
+          <span>想進一步討論？留下聯絡方式</span>
         </h2>
         <p className="text-sm text-slate-600 mt-1">
-          請提供能聯繫到您的真實資訊與偏好時段，我們將為您統整這份財務診斷報告，並安排顧問會議。
+          提出申請後，Kevin 會透過你提供的聯絡方式確認需求與可約時間。諮詢形式及費用（如有）會在確認預約前說明。
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Name / Nickname */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+          <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">
             姓名 / 稱呼 <span className="text-emerald-600">*</span>
           </label>
           <div className="relative">
@@ -39,7 +39,7 @@ export default function Step4ContactSchedule({ formData, updateFormData, errors 
             />
           </div>
           {errors?.name && (
-            <p className="text-xs text-rose-600 font-medium flex items-center gap-1 mt-1">
+            <p className="text-sm text-rose-600 font-medium flex items-center gap-1 mt-1">
               <AlertCircle className="w-3.5 h-3.5" /> {errors.name}
             </p>
           )}
@@ -47,7 +47,7 @@ export default function Step4ContactSchedule({ formData, updateFormData, errors 
 
         {/* Email Address */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+          <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">
             常用 Email <span className="text-emerald-600">*</span>
           </label>
           <div className="relative">
@@ -63,17 +63,17 @@ export default function Step4ContactSchedule({ formData, updateFormData, errors 
             />
           </div>
           {errors?.email ? (
-            <p className="text-xs text-rose-600 font-medium flex items-center gap-1 mt-1">
+            <p className="text-sm text-rose-600 font-medium flex items-center gap-1 mt-1">
               <AlertCircle className="w-3.5 h-3.5" /> {errors.email}
             </p>
           ) : (
-            <p className="text-[11px] text-slate-500">此問券診斷報告與會前行事曆邀請將寄至此信箱</p>
+            <p className="text-[11px] text-slate-500">此信箱用於回覆你的諮詢申請；送出申請不代表預約已成立。</p>
           )}
         </div>
 
         {/* Line ID (Only) */}
         <div className="space-y-1.5 md:col-span-2">
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+          <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">
             LINE ID (選填)
           </label>
           <div className="relative">
@@ -86,14 +86,14 @@ export default function Step4ContactSchedule({ formData, updateFormData, errors 
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 rounded-xl text-slate-900 placeholder-slate-400 text-sm focus:outline-none transition-all shadow-xs"
             />
           </div>
-          <p className="text-[11px] text-slate-500">方便顧問會前與您快速確認與對接訊息</p>
+          <p className="text-[11px] text-slate-500">選填；可用於後續確認需求與時間。</p>
         </div>
       </div>
 
       {/* Preferred Consultation Time Slot */}
       <div className="space-y-3 pt-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+          <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
             <Clock className="w-4 h-4 text-emerald-600" />
             <span>偏好的諮詢時段 <span className="text-emerald-600">*</span></span>
           </label>
@@ -109,7 +109,7 @@ export default function Step4ContactSchedule({ formData, updateFormData, errors 
                 type="button"
                 key={slot}
                 onClick={() => updateFormData('preferredTimeSlot', slot)}
-                className={`px-4 py-3 rounded-xl text-left border transition-all text-xs font-semibold flex items-center justify-between ${
+                className={`px-4 py-3 rounded-xl text-left border transition-all text-sm font-semibold flex items-center justify-between ${
                   isSelected
                     ? isUndecided
                       ? 'bg-amber-50 border-amber-500 text-amber-950 shadow-sm ring-1 ring-amber-400/40'
@@ -135,13 +135,13 @@ export default function Step4ContactSchedule({ formData, updateFormData, errors 
         </div>
 
         {formData.preferredTimeSlot?.includes('暫時還沒想好') && (
-          <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed">
-            💡 <strong>沒問題！</strong>送出預約後，顧問會先審閱您的自測報告，並透過 LINE 或信箱與您進一步協調最合適的時間。
+          <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-xl text-sm text-amber-900 leading-relaxed">
+            💡 <strong>沒問題！</strong>送出預約後，Kevin 會透過你提供的聯絡方式確認需求，再一起協調時間。
           </div>
         )}
 
         {errors?.preferredTimeSlot && (
-          <p className="text-xs text-rose-600 font-medium flex items-center gap-1 mt-1">
+          <p className="text-sm text-rose-600 font-medium flex items-center gap-1 mt-1">
             <AlertCircle className="w-3.5 h-3.5" /> {errors.preferredTimeSlot}
           </p>
         )}

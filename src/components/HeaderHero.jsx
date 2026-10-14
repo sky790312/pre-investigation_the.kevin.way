@@ -1,30 +1,13 @@
-import React from 'react';
-import { CheckCircle2, Sparkles, Clock } from 'lucide-react';
-
 export default function HeaderHero() {
   return (
-    <div className="relative overflow-hidden pt-6 pb-8 sm:pt-10 sm:pb-12 px-3 sm:px-6">
-      {/* Soft Background Aura Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-gradient-to-r from-emerald-100/60 via-teal-50/40 to-blue-100/40 blur-3xl pointer-events-none -z-10 rounded-full" />
-
-      <div className="max-w-2xl mx-auto text-center relative z-10">
-
-        {/* Clean Responsive Main Title - Single Line Guaranteed on Most Devices */}
-        <h1 className="font-extrabold tracking-tight text-slate-900 mt-6 mb-3 sm:mb-4 leading-snug font-heading">
-          <span className="text-slate-900 font-extrabold block text-2xl sm:text-3xl md:text-4xl mb-1.5 sm:mb-2">
-            從理財到理心
-          </span>
-          <span className="gradient-text-emerald text-2xl sm:text-3xl md:text-4xl font-black block">
-            建立你的專屬財務系統
-          </span>
-        </h1>
-
-        {/* Subtitle with Comfortable Line Spacing */}
-        <p className="text-slate-600 text-xs sm:text-base leading-relaxed max-w-xl mx-auto font-medium mb-6">
-          花一杯咖啡的時間，為自己做一次全方位的財務與心智盲點體檢！
-        </p>
-
-      </div>
-    </div>
+    <section className="px-2 py-8 sm:py-12 text-center">
+      <p className="text-sm font-semibold text-emerald-700 mb-4">凱文生活實驗室 · 用投資提升人生的選擇權</p>
+      <h1 className="text-3xl sm:text-4xl font-extrabold leading-snug tracking-tight">
+        你的投資方式，<br /><span className="gradient-text-emerald">跟想過的生活合拍嗎？</span>
+      </h1>
+      <p className="mx-auto mt-5 max-w-xl text-base text-slate-600 leading-relaxed">免費投資節奏檢測：從財務準備、投資習慣與生活目標，整理你目前最值得留意的面向。</p>
+      <p className="mt-4 text-sm text-emerald-800">9 道自我盤點題 · 不需聯絡資料即可看結果 · 諮詢自由選擇</p>
+      <p className="mt-3 text-sm text-slate-500">從下方開始。簡短回答即可，不確定的地方也可以直接寫下來。</p>
+    </section>
   );
 }

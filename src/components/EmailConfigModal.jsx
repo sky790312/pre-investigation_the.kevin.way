@@ -32,7 +32,7 @@ export default function EmailConfigModal({
             </div>
             <div>
               <h3 className="text-base font-bold text-slate-900 font-heading">問卷發送引擎與信箱設定</h3>
-              <p className="text-xs text-slate-500">調整此問券發送目標與 Serverless 引擎</p>
+              <p className="text-xs text-slate-500">調整此問卷發送目標與 Serverless 引擎</p>
             </div>
           </div>
 

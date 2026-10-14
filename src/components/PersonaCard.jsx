@@ -1,112 +1,48 @@
-import React from 'react';
-import { Sparkles, Shield, Clock, Flame, Zap, CheckCircle2 } from 'lucide-react';
 import { EXPENSE_CONTROL_OPTIONS, MARKET_ATTENTION_OPTIONS } from '../data/questionnaireOptions';
 
 export default function PersonaCard({ formData }) {
-  // Calculate persona metrics dynamically
-  const emergencyMonths = parseFloat(formData.emergencyMonths) || 0;
-  const isPreciseExpense = formData.expenseControl === 'exp_precise';
-  const isHighFrictionMarket = formData.marketAttentionHours === 'att_frequent' || formData.marketAttentionHours === 'att_obsessed';
-  
-  // Calculate Readiness Score (0 - 100)
-  let score = 50;
-  if (emergencyMonths >= 6) score += 20;
-  else if (emergencyMonths >= 3) score += 10;
-  
-  if (isPreciseExpense) score += 15;
-  if (!isHighFrictionMarket) score += 15;
-  
-  score = Math.min(95, Math.max(25, score));
-
-  // Determine Persona Title
-  let personaTitle = '潛在投資理財升級者';
-  let personaDesc = '具備基礎財務觀念，正尋求擺脫高摩擦盯盤、打造自動化理財系統的關鍵轉折點。';
-  let badgeColor = 'from-emerald-600 to-teal-700';
-
-  if (emergencyMonths < 3 || formData.expenseControl === 'exp_blind') {
-    personaTitle = '急需築起防禦牆的急迫學習者';
-    personaDesc = '當前現金流與預備金水位較薄弱，首要任務是先止血、補齊防禦牆，防止投資波動干擾正常生活。';
-    badgeColor = 'from-amber-600 to-rose-700';
-  } else if (isHighFrictionMarket) {
-    personaTitle = '高心力摩擦的重度盯盤者';
-    personaDesc = '投資佔用了過多時間與生活精力，亟需進行持股減法拷問，重新買回安心睡覺的生活節奏。';
-    badgeColor = 'from-purple-600 to-blue-700';
-  } else if (score >= 80) {
-    personaTitle = '高防禦力的優質系統實踐者';
-    personaDesc = '已有優異的底層防禦力與低摩擦心態，幫助您將配置調整至極致與更高效率。';
-    badgeColor = 'from-emerald-700 to-teal-800';
-  }
-
-  const expOptionLabel = EXPENSE_CONTROL_OPTIONS.find(o => o.id === formData.expenseControl)?.label || '未評估';
-  const attOptionLabel = MARKET_ATTENTION_OPTIONS.find(o => o.id === formData.marketAttentionHours)?.label || '未評估';
+  const months = Number(formData.emergencyMonths);
+  const expense = EXPENSE_CONTROL_OPTIONS.findIndex(option => option.id === formData.expenseControl);
+  const attention = MARKET_ATTENTION_OPTIONS.findIndex(option => option.id === formData.marketAttentionHours);
+  const expenseLabel = EXPENSE_CONTROL_OPTIONS[expense]?.label || '尚未填寫';
+  const attentionLabel = MARKET_ATTENTION_OPTIONS[attention]?.label || '尚未填寫';
+  const observations = [
+    {
+      title: '財務準備｜先看清楚你的緩衝',
+      evidence: `你填寫的現金預備金為 ${Number.isFinite(months) ? months : '未確認'} 個月；支出習慣是「${expenseLabel}」。`,
+      note: expense === 2 || months < 3
+        ? '可以先整理必要支出與可動用的現金，讓生活中的不確定性更容易被看見。'
+        : '你已提供現金緩衝的估計；是否足夠，仍需配合收入穩定度、負債與家庭責任一起看。',
+      action: '列出一個月的必要支出，再核對目前可隨時動用的現金。',
+    },
+    {
+      title: '投資習慣｜留意注意力花在哪裡',
+      evidence: `你選擇的市場關注狀況是「${attentionLabel}」。`,
+      note: attention >= 2
+        ? '你提到投資會影響心情或佔用較多生活心力，可以先觀察哪些時刻最容易想查看行情。'
+        : '看盤時間本身沒有標準答案，也不代表配置是否適合你；重點是這個習慣能否支持你的生活。',
+      action: '記錄三次查看行情的原因：是在執行計畫、查找資料，還是想獲得安心？',
+    },
+    {
+      title: '生活目標｜把想要的改變說具體',
+      evidence: `你希望的生活節奏：「${formData.desiredLifePaceText || '尚未填寫'}」`,
+      note: `你最想釐清的是：「${formData.absoluteOnePainPointText || '尚未填寫'}」。這可以成為下一次整理投資決策時的起點。`,
+      action: '選一個本週想保留給生活的時段，寫下你想做的事，觀察投資習慣是否會打斷它。',
+    },
+  ];
 
   return (
-    <div className="rounded-2xl p-6 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl relative overflow-hidden my-6 border border-slate-700">
-      {/* Subtle Background Glow */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 space-y-4">
-        {/* Top Header */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700/80 pb-4">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
-                1on1 事前問券演算法速診
-              </span>
-              <h3 className="text-lg sm:text-xl font-bold font-heading text-white">
-                {personaTitle}
-              </h3>
-            </div>
-          </div>
-
-          {/* Score Badge */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs font-semibold">
-            <span className="text-slate-400">財務防禦力與準備度</span>
-            <span className="text-emerald-400 font-extrabold text-base">{score} / 100</span>
-          </div>
-        </div>
-
-        {/* Persona Description */}
-        <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-          {personaDesc}
-        </p>
-
-        {/* Dynamic Metric Chips */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700/80">
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-semibold mb-1">
-              <Shield className="w-3.5 h-3.5 text-emerald-400" />
-              <span>緊急預備金水位</span>
-            </div>
-            <p className="text-sm font-bold text-white">
-              {emergencyMonths} 個月生活費
-            </p>
-          </div>
-
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700/80">
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-semibold mb-1">
-              <Zap className="w-3.5 h-3.5 text-amber-400" />
-              <span>支出掌控習慣</span>
-            </div>
-            <p className="text-xs font-bold text-slate-200 truncate">
-              {expOptionLabel}
-            </p>
-          </div>
-
-          <div className="p-3 rounded-xl bg-slate-800/80 border border-slate-700/80">
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-semibold mb-1">
-              <Clock className="w-3.5 h-3.5 text-blue-400" />
-              <span>每週看盤心力消耗</span>
-            </div>
-            <p className="text-xs font-bold text-slate-200 truncate">
-              {attOptionLabel}
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="space-y-4 my-6">
+      <p className="text-sm text-slate-600 leading-relaxed">以下依你的支出、預備金、關注市場習慣與生活目標整理。其他文字回答會保留在申請摘要中，不會自動判定你的配置或風險承受能力。</p>
+      {observations.map(item => (
+        <article key={item.title} className="rounded-2xl border border-emerald-200 bg-white p-5 space-y-3">
+          <h3 className="text-lg font-bold text-emerald-900">{item.title}</h3>
+          <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap break-words">{item.evidence}</p>
+          <p className="text-sm text-slate-600 leading-relaxed">{item.note}</p>
+          <p className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-950 leading-relaxed"><strong>一個小行動：</strong>{item.action}</p>
+        </article>
+      ))}
+      <p className="text-sm text-slate-500 leading-relaxed">這是自我盤點工具，並非完整財務評估或個別投資建議，也不提供買賣指示。先選一個最有感的小行動就好。</p>
     </div>
   );
 }
